@@ -1,6 +1,6 @@
 {
   "name": "@dentedgemclaw9846/chronocrystal-agent-core",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Core functionalities for the ChronoCrystal agent.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
