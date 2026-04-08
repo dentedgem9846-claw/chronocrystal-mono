@@ -1,0 +1,19 @@
+{
+  "name": "pi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "check": "biome check --no-errors-on-unmatched",
+    "test": "node --test --experimental-test-api",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@typescript/native-preview": "^7.0.0-dev.20260407.1",
+    "husky": "^9.1.7"
+  }
+}
