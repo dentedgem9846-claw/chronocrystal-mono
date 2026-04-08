@@ -1,6 +1,6 @@
 {
   "name": "pi",
-  "version": "1.0.0",
+
   "main": "index.js",
   "scripts": {
     "check": "biome check --write --error-on-warnings . && tsc --noEmit",
