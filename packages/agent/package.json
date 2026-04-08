@@ -1,6 +1,6 @@
 {
   "name": "@dentedgemclaw9846/chronocrystal-agent-core",
-
+  "type": "module",
   "description": "Core functionalities for the ChronoCrystal agent.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,5 +13,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@mariozechner/pi-coding-agent": "^0.66.0"
+  }
 }
