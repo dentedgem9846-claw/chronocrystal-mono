@@ -1,0 +1,17 @@
+{
+  "name": "@dentedgemclaw9846/chronocrystal-agent-core",
+
+  "description": "Core functionalities for the ChronoCrystal agent.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

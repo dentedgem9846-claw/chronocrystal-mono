@@ -6,6 +6,7 @@ If the user did not give you a concrete task in their first message, read README
 
 * [packages/foo/README.md]
 * [packages/bar/README.md]
+* [packages/agent/README.md]
 
 ## Code Quality
 
@@ -42,7 +43,7 @@ gh issue view <number> --json title,body,comments,labels,state
 When creating issues:
 
 * Add `pkg:*` labels to indicate which package(s) the issue affects
-* Available labels: `[pkg:foo]`, `[pkg:bar]`
+* Available labels: `[pkg:foo]`, `[pkg:bar]`, `[pkg:agent]`
 * If an issue spans multiple packages, add all relevant labels
 
 When posting issue/PR comments:

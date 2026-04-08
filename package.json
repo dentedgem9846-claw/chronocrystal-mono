@@ -1,9 +1,9 @@
 {
   "name": "pi",
-  "version": "1.0.0",
+
   "main": "index.js",
   "scripts": {
-    "check": "biome check --no-errors-on-unmatched",
+    "check": "biome check --write --error-on-warnings . && tsc --noEmit",
     "test": "node --test --experimental-test-api",
     "prepare": "husky"
   },
@@ -13,7 +13,9 @@
   "description": "",
   "devDependencies": {
     "@biomejs/biome": "^2.4.10",
+    "@types/node": "^25.5.2",
     "@typescript/native-preview": "^7.0.0-dev.20260407.1",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "typescript": "^6.0.2"
   }
 }
