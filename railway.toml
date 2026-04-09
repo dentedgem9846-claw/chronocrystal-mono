@@ -3,7 +3,6 @@ builder = "DOCKERFILE"
 dockerfilePath = "packages/simplex/docker/Dockerfile"
 
 [deploy]
-startCommand = "/entrypoint.sh"
 healthcheckPath = "/"
 healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
