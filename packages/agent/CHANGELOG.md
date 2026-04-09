@@ -6,6 +6,7 @@
 * Agent definitions via markdown files with YAML frontmatter (`agents/witch.md`, `agents/book.md`) loaded with `parseFrontmatter` from the pi SDK. Model, tools, and system prompt are now editable without touching code.
 * `REFERENCES.md` with links to pi SDK examples used as implementation guides.
 * Programmatic E2E test harness (`test/e2e.ts`) — 12 tests covering both agents end-to-end using the SDK directly, no child process spawning.
+* `src/bridge.ts` — exported `createAgentBridge()` API: creates an isolated Shirogane agent session with a simple `prompt(text): Promise<string>` / `dispose()` interface, for use by transport packages.
 
 ### Changed
 * Simplified agent to use pi SDK built-in tools (read, write, edit, ls, grep, find) with cwd sandboxing instead of custom sandboxed tool implementations.
