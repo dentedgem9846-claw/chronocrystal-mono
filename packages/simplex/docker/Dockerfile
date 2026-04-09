@@ -11,9 +11,11 @@ RUN apt-get update \
 
 WORKDIR /app
 
-# simplex-chat binary — committed to repo, no download needed
-COPY packages/simplex/bin/simplex-chat /usr/local/bin/simplex-chat
-RUN chmod +x /usr/local/bin/simplex-chat
+# simplex-chat binary — downloaded at build time (binary is Git LFS tracked so
+# copying from the repo would place an LFS pointer, not the actual executable)
+RUN curl -fsSL "https://github.com/simplex-chat/simplex-chat/releases/download/v6.4.11/simplex-chat-ubuntu-22_04-x86_64" \
+    -o /usr/local/bin/simplex-chat \
+    && chmod +x /usr/local/bin/simplex-chat
 
 # Install deps — cached unless package.json changes
 COPY packages/simplex/package.json packages/simplex/package-lock.json packages/simplex/
