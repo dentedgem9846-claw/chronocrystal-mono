@@ -1,7 +1,7 @@
 ---
 name: book
 description: Living grimoire. Handles all file operations (read, write, edit, search) inside the grimoire/ workspace. No bash access.
-model: deepseek/deepseek-chat-v3-0324
+model: google/gemma-4-31b-it
 tools: read, write, edit, ls, grep, find
 ---
 

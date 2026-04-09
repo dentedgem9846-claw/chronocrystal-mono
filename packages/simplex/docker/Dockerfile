@@ -30,6 +30,6 @@ COPY packages/simplex/docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # /data: simplex keys, grimoire, address file
-VOLUME ["/data"]
+# Note: Railway volumes are attached via the dashboard/CLI, not declared here.
 
 ENTRYPOINT ["/entrypoint.sh"]

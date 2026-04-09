@@ -3,6 +3,18 @@
 ## [Unreleased]
 
 ### Added
+- HTTP health server on `PORT` env var so Railway's healthcheck has an endpoint to probe.
+- `[reply]` log entry on every outbound message (contact ID + response char count).
+
+### Fixed
+- Removed `VOLUME` keyword from `docker/Dockerfile` — Railway bans it; volumes are now attached via the Railway dashboard/CLI.
+
+### Changed
+- `railway.toml`: added `healthcheckPath`, `healthcheckTimeout = 120`, and `restartPolicyMaxRetries = 10`.
+
+---
+
+### Added
 - Initial SimpleX Chat transport (`src/index.ts`): connects to a self-hosted SimpleX CLI WebSocket server, routes messages to the Shirogane agent, one isolated session per contact.
 - Per-contact agent session management with serialized message queue (no concurrent messages per contact).
 - Auto-accept incoming contact requests; welcome message on first contact.

@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import http from "node:http";
 import path from "node:path";
 import type { ChatEvent } from "@simplex-chat/types";
 import { T } from "@simplex-chat/types";
@@ -18,6 +19,7 @@ const AGENTS_DIR = path.resolve(process.env.AGENTS_DIR ?? "../../agent/agents");
 const GRIMOIRE_DIR = path.resolve(process.env.GRIMOIRE_DIR ?? "../../agent/grimoire");
 const DEFAULT_MODEL = process.env.DEFAULT_MODEL;
 const ADDRESS_FILE = process.env.ADDRESS_FILE;
+const HEALTH_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
 
 // ---------------------------------------------------------------------------
 // Per-contact session management
@@ -117,7 +119,10 @@ async function onNewChatItems(chat: ChatClient, chatItems: T.AChatItem[]): Promi
 			const bridge = await getOrCreateBridge(contact.contactId);
 			const response = await bridge.prompt(text);
 			if (response) {
+				console.log(`[reply] contact=${contact.contactId} chars=${response.length}`);
 				await chat.apiSendTextMessage(T.ChatType.Direct, contact.contactId, response);
+			} else {
+				console.warn(`[reply] contact=${contact.contactId} empty response`);
 			}
 		});
 	}
@@ -194,6 +199,23 @@ async function run(): Promise<void> {
 	await chat.disconnect();
 }
 
+// ---------------------------------------------------------------------------
+// Health server — Railway probes this to confirm the process is alive.
+// ---------------------------------------------------------------------------
+
+function startHealthServer(): void {
+	const server = http.createServer((_req, res) => {
+		res.writeHead(200, { "Content-Type": "text/plain" });
+		res.end("ok");
+	});
+	server.listen(HEALTH_PORT, () => {
+		console.log(`[health] listening on port ${HEALTH_PORT}`);
+	});
+	server.on("error", (err) => {
+		console.error("[health] server error:", err.message);
+	});
+}
+
 // Retry loop — reconnect if the server drops the connection.
 async function main(): Promise<void> {
 	const RETRY_DELAY_MS = 5_000;
@@ -212,6 +234,7 @@ async function main(): Promise<void> {
 	}
 }
 
+startHealthServer();
 main().catch((err: Error) => {
 	console.error("Fatal:", err.message);
 	process.exit(1);

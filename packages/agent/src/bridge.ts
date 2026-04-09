@@ -66,6 +66,7 @@ async function runBookTask(
 	authStorage: ReturnType<typeof AuthStorage.create>,
 	modelRegistry: ReturnType<typeof ModelRegistry.create>,
 ): Promise<string> {
+	console.log(`[book] task start: ${task.slice(0, 120)}`);
 	const model = modelRegistry.find("openrouter", agent.model);
 	if (!model) throw new Error(`Model not found: openrouter/${agent.model}`);
 
@@ -85,12 +86,20 @@ async function runBookTask(
 			? agent.tools.filter((t): t is ToolName => t in toolMap).map((t) => toolMap[t])
 			: Object.values(toolMap);
 
+	const settingsManager = SettingsManager.inMemory({
+		compaction: { enabled: false },
+		retry: { enabled: true, maxRetries: 2 },
+	});
+	console.log(`[book] creating resource loader`);
 	const loader = new DefaultResourceLoader({
 		systemPromptOverride: () => agent.systemPrompt,
 		appendSystemPromptOverride: () => [],
 		noSkills: true,
+		settingsManager,
 	});
+	console.log(`[book] reloading resource loader`);
 	await loader.reload();
+	console.log(`[book] creating agent session`);
 
 	const { session } = await createAgentSession({
 		model,
@@ -101,10 +110,7 @@ async function runBookTask(
 		tools,
 		resourceLoader: loader,
 		sessionManager: SessionManager.inMemory(),
-		settingsManager: SettingsManager.inMemory({
-			compaction: { enabled: false },
-			retry: { enabled: true, maxRetries: 2 },
-		}),
+		settingsManager,
 	});
 
 	let output = "";
@@ -178,9 +184,13 @@ export async function createAgentBridge(options: AgentBridgeOptions = {}): Promi
 		}),
 		execute: async (_toolCallId, params) => {
 			const taskNum = ++taskCounter;
+			console.log(`[magic_book] task #${taskNum} dispatched: ${params.task.slice(0, 120)}`);
 			runBookTask(params.task, bookAgent, grimoireDir, authStorage, modelRegistry)
 				.then((result) => onBookTaskResult(taskNum, result))
-				.catch((err: Error) => onBookTaskResult(taskNum, `ERROR: ${err.message}`));
+				.catch((err: Error) => {
+					console.error(`[magic_book] task #${taskNum} threw:`, err.message);
+					onBookTaskResult(taskNum, `ERROR: ${err.message}`);
+				});
 			return {
 				content: [{ type: "text" as const, text: `Task #${taskNum} dispatched to the Magic Book.` }],
 				details: {},
