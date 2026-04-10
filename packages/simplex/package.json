@@ -1,0 +1,22 @@
+{
+  "name": "@dentedgemclaw9846/chronocrystal-simplex",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SimpleX Chat transport for the ChronoCrystal agent.",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "npx tsx src/index.ts",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@simplex-chat/types": "0.3.0",
+    "simplex-chat": "0.3.0",
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2"
+  }
+}

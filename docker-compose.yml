@@ -1,0 +1,13 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: packages/simplex/docker/Dockerfile
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - BOT_DISPLAY_NAME=${BOT_DISPLAY_NAME:-Shirogane}
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-}
+      - HONCHO_API_KEY=${HONCHO_API_KEY:-}
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

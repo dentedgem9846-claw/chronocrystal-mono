@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "noEmit": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "inlineSources": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "../agent/src/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

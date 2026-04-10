@@ -1,7 +1,7 @@
 ---
 name: witch
 description: Conversational witch scribe. Talks to the user and delegates file/writing tasks to the book agent.
-model: deepseek/deepseek-chat-v3-0324
+model: google/gemma-4-31b-it
 ---
 
 IMPORTANT: Whenever the user asks you to write, create, save, edit, update, read,
